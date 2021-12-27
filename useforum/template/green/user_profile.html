@@ -1,0 +1,99 @@
+{include file="header.html" t=$info.uname}
+<div id="page">
+	<div class="post">
+			<h2 class="title">{$info.uname}{if "1" == $info.admit}<img src="./template/green/images/admit.png" title="身份认证"/>{/if}</h2>
+        <div class="lists">
+            <div class="content">
+				{if $info.avatar}
+					<img src ="{$info.avatar}" width="160" alt="{$info.uname}" align="right"/>
+				{else}
+					<img src ="{$siteurl}/template/green/images/noavatar_big.gif" width="160" alt="{$info.uname}" align="right"/>
+				{/if}
+			</div>
+            <h4>{if "GBADMIN" == $smarty.session.userinfo.acl}<a href="{spUrl c=user a=editprofile uid=$info.uid}" target="_blank">编辑</a>{/if}{($info.acl =="GBADMIN") ? "管理员" : ( ($info.forum =="0") ? "普通用户" : "版主")}
+                <i>{($info.acl =="shield") ? "该用户已被屏蔽" : ""}</i>
+            </h4>
+            <p>{("1" == $info.male) ? "Boy" :(("2" == $info.male)? "Girl" : "")}  {$info.ctime|date_format:"%Y-%m-%d %H:%M"} 来到本站。</p>
+            <p>生日 {$info.birth}</p>
+            <p>UID {$info.uid}</p>
+            <p>积分 {$info.credits}</p>
+            <p>发帖数 {$info.post}</p>
+            <p>精华数 {$info.digestpost}</p>
+            <p>QQ {$info.qq}</p>
+            <p>现居地 {$info.live}</p>
+            <p>{lastLogin uname=$info.uname}</p>
+            <h4>个人简介</h4>
+            <p>{$info.introduce}</p>
+		</div>
+        <div class="lists-right">
+            <h4>{$info.uname}的最新话题</h4>
+            {foreach from=$topics item=result}
+                <p><b><a href="{spUrl c=main a=view gid=$result.gid}">{$result.title}</a></b>
+                {$result.ctime|date_format:"%Y-%m-%d"}
+                <a href="{spUrl c=main a=viewforum gid=$result.forum}">{$result.f.name}</a></p>
+            {/foreach}
+        {if "GBADMIN" == $smarty.session.userinfo.acl}
+            <h4>以下内容仅管理员可见</h4>
+            <p>真实姓名 {$info.truename}
+            <p>Email {$info.email}
+            <p>联系电话 {$info.phone}
+            <p>联系方式 {$info.address}
+            <p>注册IP {$info.ip}
+            <p>照片地址 {$info.photo}
+        {/if}
+        </div>
+		<div class="entry">
+            <h4>{$info.uname}的留言列表{if $smarty.get.page}-第{$smarty.get.page}页{/if}</h4>
+            <a id="gbk"></a>
+			{foreach from=$results item=result}
+			{if ("on"==$result.secret)}
+                {if $info.uname == $smarty.session.userinfo.uname || "GBADMIN" == $smarty.session.userinfo.acl}
+                    <p>{$result.content}
+                    <p class="signature"><i>Secret by <b><a href ="{spUrl c=user a=profile uname=$result.uname}">{$result.uname}</a>
+                    </b> on {$result.ctime|date_format:"%Y-%m-%d %H:%I:%S"}.</i>
+		        {/if}
+			{else}
+				<p>{$result.content}
+				<p class="signature"><i>Post by <b><a href ="{spUrl c=user a=profile uname=$result.uname}">{$result.uname}</a></b> on {$result.ctime|date_format:"%Y-%m-%d %H:%I:%S"}.</i>
+			{/if}
+			{if ( "GBADMIN" == $smarty.session.userinfo.acl)}<a href ="{spUrl c=admin a=delpg pgid=$result.pgid}">删除</a>{/if}
+			{/foreach}
+		</div>
+		<div class="scott">
+			<p>
+				{if $pager}
+                    {pager pager=$pager c="user" a="profile" idname="uid" id=$info.uid}
+				{/if}
+			</p>
+		</div>
+		{if $smarty.session.userinfo.uname}
+			<form action="{spUrl c=user a=rpost}" method="POST">
+				<p>给{$info.uname}留言：<br /></p>
+				<textarea name="content" style="width:450px;height:100px;visibility:hidden;"></textarea>
+				<br/>
+				<p>悄悄话　<input type="checkbox" name="secret"/></p>
+				<input type="hidden" name="uid" value="{$info.uid}">
+				<p><input type="submit" class="links" value="提  交" /></p>			
+		
+			</form>
+		{/if}
+	</div>
+</div>
+	<link rel="stylesheet" href="{$siteurl}/include/editor/themes/default/default.css" />
+	<script charset="utf-8" src="{$siteurl}/include/editor/kindeditor-min.js"></script>
+	<script charset="utf-8" src="{$siteurl}/include/editor/lang/zh_CN.js"></script>
+	<script>
+		var editor;
+		KindEditor.ready(function(K) {
+			editor = K.create('textarea[name="content"]', {
+				resizeType : 1,
+				allowPreviewEmoticons : false,
+				allowImageUpload : false,
+				items : [
+					'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+			});
+		});
+	</script>
+{include file="footer.html"}

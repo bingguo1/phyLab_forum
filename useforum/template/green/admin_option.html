@@ -1,0 +1,27 @@
+{include file="subnavibar.html"}
+	<div id="page">
+		<div class="post">
+		<h2 class="title">论坛基本信息</h2>
+			<div class="entry">
+			<form action="{spUrl c=admin a=optionedited}" method="POST">
+			<p>站点名称：<input type="text" name="sitename" style="width:200px;" value="{$sitename}"></p>
+			<p>站点描述：<input type="text" name="siteinstruction" style="width:500px;" value="{$siteinstruction}"></p>
+			<p>图标地址：<input type="text" name="logo" style="width:500px;" value="{$logo}"> （若开启伪静态，须为绝对路径）</p>
+			<hr/>
+			<p>站点关键字：<input type="text" name="description" style="width:350px;" value="{$description}">
+			<p>浏览器描述：<input type="text" name="keywords" style="width:350px;" value="{$keywords}">
+			<hr/>
+			<p>单页话题数：<input type="text" name="listpager" style="width:50px;" value="{$listpager}">
+			<p>单页回复数：<input type="text" name="replypager" style="width:50px;" value="{$replypager}">
+			<p>防灌水时间：<input type="text" name="posttime" style="width:50px;" value="{$posttime}">秒
+			<p>精华积分：<input type="text" name="digest" style="width:50px;" value="{$digest}">
+			<p>话题积分：<input type="text" name="newtopic" style="width:50px;" value="{$newtopic}">
+			<p>回复积分：<input type="text" name="newreply" style="width:50px;" value="{$newreply}">
+			<p>注册验证码：<input type="text" name="regcode" style="width:50px;" value="{$regcode}">1为开启，0或空关闭</p>
+				<p><input type="submit" class="links" value="提  交" /></p>			
+			</form>	
+			
+					</div>
+		</div>
+	</div>
+{include file="footer.html"}

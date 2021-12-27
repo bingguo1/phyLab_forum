@@ -1,0 +1,83 @@
+body{
+     margin:0;
+     padding:0;
+   
+}
+
+#wrapper{
+         width:700px;
+         margin:0px auto;
+}
+
+
+#menu ul{
+         margin:0px;
+         padding:0px;
+         list-style-type:none;
+         text-align:center;
+         background-color:gray;
+        }
+
+
+#menu li{
+          display:inline;
+          margin:0 30 0 30;
+        
+         }
+
+
+
+/*    ====================================              */
+
+#lab_main{
+    
+      float:left;
+      
+      border-top: solid 1px;
+    
+    
+}
+
+/* =========================================================*/
+#index_pic {
+       width:600px; 
+       height:460px;
+       margin:0 50 0 50;
+}
+
+#index_main {
+         border:solid 5px;
+         padding:10 130 10 160;
+}
+
+/*  ====================================================*/
+            
+table{
+    
+   
+    width: 700px;
+    background: #669999;
+   font-size: large;
+   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+   height: 200px;
+   border-style: solid;
+   
+}
+td{
+    border: solid grey;
+  
+}
+tr{
+  
+}
+#error{
+    color: red;
+}
+
+
+
+
+
+
+
+

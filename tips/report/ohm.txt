@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<title> hints for ohm's law lab report</title>
+<body>
+
+<h3>Hints for ohm's law lab report</h3>
+<hr>
+
+<h4> Why does the resistance of a metal increase with temperature?</h4>
+The mechanism of metallic resistance : as temperature increases the thermal vibrations in the lattice increase causing more electron scattering therefore more collisions will take place, slowing down the electron flow. This increases the rate of transfer of electrical energy by heating and increases the electrical resistance. 
+
+Think about walking threw a crowded room, if the people are standing still you can easily walk around them and get threw to the other side. But, if they moving, and walking around you 'bump' into people and thus its harder to get threw the other side and takes longer.
+
+Now, assume the room is the conductor, the people the 'atoms' in the conductor, and you are the free 'electron.' Like i just said before, if the people are standing still, in other words the conductor is at room temperature, its easy to get through. But if the people are moving, 'the atoms are vibrating' its harder to get through which means resistance increases.
+
+The vibrations is cause by heat, so more heat, more vibration, and resistance increases.
+
+
+
+<h4> Does light bulb obey  Ohm¡¯s law? </h4>
+Yes, it¡¯s just its resistance is not a constant. Obeying Ohm's law doesn't mean the current has to be linearly proportional to the voltage. If at any time, the resistance equals the ratio of voltage to current no matter whether resistance itself changes or not, then Ohm's law holds.
+Ohm's law holds for circuits containing only resistive elements (no capacitances or inductances). In such kind of circuits, the electric power are totally transferred to heat energy,rather than kinetic energy etc.
+In reality, there are lots of cases Ohm's law doesn't hold, though light bulb is not included. If you connect electric motor into circuit, then it transfer some of the electric power to kinetic energy, so Ohm's law doesn't hold.
+
+
+</body>
+</html>

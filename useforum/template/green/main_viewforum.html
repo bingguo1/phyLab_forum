@@ -1,0 +1,88 @@
+{include file="header.html" t=$info.name}
+<div id="page">
+	<div class="post">
+			{if $smarty.session.userinfo.uname}
+                <span class="scott" style="text-align: left;font-size: 16px;"><span class="total">{$info.name}</span>
+                <a href="{spUrl c=main a=post fid=$info.id}">新话题</a></span>
+			{else}
+				<p><b>{$info.name}</b>  请<a href="{spUrl c=main a=login backurl=$currenturl}">登录</a>后参与或创建话题。
+			{/if}主题：{$info.topicnum}
+            {if $info.bm}
+                版主：
+                {foreach from=$info.bm item=bm}
+                    <a href="{spUrl c=user a=profile uname=$bm.uname}">{$bm.uname}</a>
+                {/foreach}
+            {/if}
+			<a id='rss' href="{spUrl c=rss a=forum id=$info.id}">订阅</a></p>
+			{if $info.rule}
+				<p class="signature">{$info.rule}</p>
+			{/if}
+			{if $results || $tops}
+				<table width="100%" class="item_list">
+					<thead>
+						<th width="600" ><b>标题</b></th>
+						<th width="100"><b>作者</b></th>
+						<th width="130" class="tdcenter"><b>发布时间</b></th>
+						<th width="130" class="tdcenter"><b>最后回复</b></th>
+						<th width="39" class="tdcenter" ><b>回复</b></th>
+						<th width="59" class="tdcenter" ><b>阅读</b></th>
+					</thead>
+		<tbody>
+		{if $pager.current_page ==1 || $pager.current_page == null}
+			{foreach from=$tops item=top}
+				<tr>
+					<td><img src="{$siteurl}/template/green/images/pin.gif" /><a href="{spUrl c=main a=view gid=$top.gid}">{$top.title}</a>
+					{if $top.digest == "1"}
+					<img src="{$siteurl}/template/green/images/digest_1.gif" class="commonimg"/>
+					{/if}</td>
+					<td class="tdcenter">{getUrl uname=$top.uname}</td>
+					<td class="tdcenter">{theDate time=$top.ctime}</td>
+					<td class="tdcenter">{theDate time=$top.rtime}</td>
+					<td class="tdcenter">{$top.replynum}</td>
+					<td class="tdcenter">
+						{$top.view}
+						{if ( "GBADMIN" == $smarty.session.userinfo.acl )}
+							<a href="javascript:void(0);" onclick="delconfirm({$top.gid},'{$top.title}');">删除</a>
+						{/if}
+					</td>
+				</tr>
+			{/foreach}
+		{/if}
+		{foreach from=$results item=result}
+			<tr>
+				<td>
+				{if $result.digest == "1"}
+				<img src="{$siteurl}/template/green/images/digest_1.gif" class="commonimg"/>
+				{/if}
+				<a href="{spUrl c=main a=view gid=$result.gid}">{$result.title}</a></td>
+				<td class="tdcenter">{getUrl uname=$result.uname}</td>
+				<td class="tdcenter">{theDate time=$result.ctime}</td>
+				<td class="tdcenter">{theDate time=$result.rtime}</td>
+				<td class="tdcenter">{$result.replynum}</td>
+				<td class="tdcenter">{$result.view}
+					{if ( "GBADMIN" == $smarty.session.userinfo.acl )}
+						<a href="javascript:void(0);" onclick="delconfirm({$result.gid},'{$result.title}');">删除</a>
+					{/if}
+				</td>
+			</tr>
+		{/foreach}
+		</tbody>
+				</table>
+				{else}<p>这里什么都没有……</p>{/if}
+		<div class="scott">
+			<p>
+				{if $pager}
+                    {pager pager=$pager c="main" a="viewforum" idname="id" id=$info.id}
+                {/if}
+			</p>
+		</div>
+	</div>
+</div>
+<script>
+function delconfirm(gid,title){
+	if( window.confirm("确定删除“" + title + "”话题？") ){
+		window.location = "{spUrl c=admin a=del}&gid=" + gid;
+	}
+}
+</script>
+{include file="footer.html"}
