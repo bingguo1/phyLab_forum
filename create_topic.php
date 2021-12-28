@@ -1,9 +1,8 @@
-<?php
-    
-//create_cat.php
-include 'connect.php';
+<?php    
 include 'header.php';
 include 'bar.php';
+include 'connect.php';
+
 
 echo '<h2>Create a topic</h2>';
 if(!isset($_SESSION['signed_in']))

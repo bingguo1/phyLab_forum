@@ -1,10 +1,7 @@
 <?php
 //signup.php
-include 'connect.php';
 include 'header.php';
-
-
-
+include 'connect.php';
 
 
 if($_SERVER['REQUEST_METHOD'] != 'POST')
@@ -78,15 +75,12 @@ else
 		//the form has been posted without, so save it
 		//notice the use of mysql_real_escape_string, keep everything safe!
 		//also notice the sha1 function which hashes the password
-		$sql = "INSERT INTO
-					users(user_name, user_pass, user_email ,user_date, user_level)
-				VALUES('" . mysql_real_escape_string($_POST['user_name']) . "',
-					   '" . sha1($_POST['user_pass']) . "',
-					   '" . mysql_real_escape_string($_POST['user_email']) . "',
-						NOW(),
-						0)";
-						
-		$result = mysql_query($sql);
+        $stmt = $conn->prepare("INSERT INTO 
+                               users(user_name, user_pass, user_email ,user_date, user_level)
+                               VALUES(?,?,?,datetime(),?)
+                               ");
+        $stmt->execute([$_POST['user_name'], sha1($_POST['user_pass']),$_POST['user_email'], 0 ]);
+        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 		if(!$result)
 		{
 			//something went wrong, display the error
@@ -102,21 +96,22 @@ else
     else
     {
         echo "Already have an account? <a href='signin.php'>sign in </a> here.";
-    echo '<div id="signup_form">';
-    echo '<b> CREATE AN ACCOUNT:</b>';
-    echo '<form method="post" action="">
+        echo '<div id="signup_form">';
+        echo '<b> CREATE AN ACCOUNT:</b>';
+        echo '<form method="post" action="">
  	 	Username: <input type="text" name="user_name" /> <br>
  		Password: <input type="password" name="user_pass"> <br>
 		Password again: <input type="password" name="user_pass_check"> <br>
 		E-mail: <input type="email" name="user_email">  <br>
  		<input type="submit" value="SUBMIT" /><br>
  	 </form>';
-     echo '</div>';
+        echo '</div>';
         echo " <div id='error'>".$errors."</div>" ;
-        
-    }
+}
 
 }
+
+$conn = null;
 
 include 'footer.php';
 ?>

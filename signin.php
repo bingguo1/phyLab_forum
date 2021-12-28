@@ -1,8 +1,5 @@
-<?php
-    
-
+<?php    
     include 'header.php';
-    session_start();
     include 'connect.php';
 
     if($_SERVER['REQUEST_METHOD']!='POST' )
@@ -41,19 +38,11 @@
         if(empty($errors))
 
         {
-
-            $sql="SELECT
-                           user_id,
-                           user_name,
-                           user_level
-                      FROM
-                           users
-                      WHERE
-                           user_name='" . mysql_real_escape_string($_POST['user_name']) . "'
-                      AND
-                           user_pass='" . sha1($_POST['user_pass']) . " ' ";
-       
-            $result=mysql_query($sql);
+            $stmt = $conn->prepare("SELECT user_id, user_name,user_level
+                                FROM users WHERE user_name=? AND user_pass=?");
+            $stmt->execute([$_POST['user_name'], sha1($_POST['user_pass'])]);
+            
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
             if(!$result)
             {
                 $errors='something went wrong while signing in, please try again later.';
@@ -61,26 +50,15 @@
             }
             else
             {
-                if(mysql_num_rows($result)==0)
-                {
-                    $errors= 'you have supplied a wrong user/password combination,please try again';
+                
+                $match=TRUE; //++++++++++++++++++++++++++++++++++++++++++
+                
+                $_SESSION['signed_in']=TRUE;
+                $_SESSION['user_id']=$result['user_id'];
+                $_SESSION['user_name']=$result['user_name'];
+                $_SESSION['user_level']=$result['user_level'];                  
+                echo 'welcome, ' .$_SESSION['user_name'].'.<a href="index_cat.php"> Proceed to the forum index page </a>.';
 
-                }
-                else
-                {
-                    $match=TRUE; //++++++++++++++++++++++++++++++++++++++++++
-
-
-                    $_SESSION['signed_in']=TRUE;
-                    while($row=mysql_fetch_assoc($result))
-                    {
-                        $_SESSION['user_id']=$row['user_id'];
-                        $_SESSION['user_name']=$row['user_name'];
-                        $_SESSION['user_level']=$row['user_level'];
-                    }
-                    echo 'welcome, ' .$_SESSION['user_name'].'.<a href="index_cat.php"> Proceed to the forum index page </a>.';
-
-                }
             }
         }
         ///////////////////////////////////////////////////////////////////

@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 
 if(!isset($_SESSION['signed_in']) or ($_SESSION['signed_in']==false))
    {

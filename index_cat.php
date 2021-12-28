@@ -6,10 +6,13 @@ include 'bar.php';
 
 $sql=" SELECT cat_id,cat_name,cat_description
        FROM   categories";
-$result=mysql_query($sql);
+//$result=mysql_query($sql);
+$result=$conn->query($sql);
+
 
 echo "<table>";
-    while($row=mysql_fetch_assoc($result))
+//    while($row=mysql_fetch_assoc($result))
+foreach($result as $row)
 {
     echo  "<tr>";
     echo     "<td>";
@@ -23,7 +26,7 @@ echo "<table>";
 echo "</table>";
 
 
-
+$conn = null;
 
 
 

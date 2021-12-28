@@ -12,14 +12,16 @@ $sql="SELECT topic_subject
       FROM    topics
       WHERE   topic_id=".$_GET['id'];
 
-$result=mysql_query($sql);
-$subject=mysql_fetch_assoc($result);
+//$result=mysql_query($sql);
+//$subject=mysql_fetch_assoc($result);
 
-
+$result=$conn->query($sql);
+$subject=$result->fetch();
+       
 $sql="SELECT       post_content,post_date,post_by
       FROM         posts
       WHERE        post_topic=".$_GET['id'];
-$result=mysql_query($sql);
+$result=$conn->query($sql);
 
 echo "SUBJECT:".$subject['topic_subject'];
 echo "<table>";
@@ -28,15 +30,15 @@ echo      "<th> AUTHOR </th>";
 echo      "<th> CONTENT </th>";
 echo      "<th> POST TIME</th>";
 echo   "</tr>";
-while($row=mysql_fetch_assoc($result))
+foreach($result as $row)
 {
     echo "<tr id='post_tr_otherlines'>";
     echo "<td>";
     $sql2="SELECT user_name 
            FROM   users
            where  user_id=".$row['post_by'];
-    $result2=mysql_query($sql2);
-    $row2=mysql_fetch_assoc($result2);
+    $result2=$conn->query($sql2);
+    $row2=$result2->fetch();
     echo $row2['user_name'];
     echo "</td>";
     echo "<td>";
@@ -46,6 +48,7 @@ while($row=mysql_fetch_assoc($result))
     echo $row['post_date'];
     echo "</td>";
 }
+$conn = null;
 include 'footer.php';
 
 ?>
